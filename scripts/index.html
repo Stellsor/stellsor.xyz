@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Embedded Codes</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #d07b36;
+            color: #eee;
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            position: relative;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .code-box {
+            width: 45%;
+            margin: 10px;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            position: relative;
+        }
+
+        .code-box h2 {
+            margin-top: 0;
+        }
+
+        .code {
+            font-size: 16px;
+            color: #ddd;
+        }
+
+        .copy-button,
+        .raw-button {
+            background-color: #d07b36;
+            border: none;
+            color: #eee;
+            padding: 8px 16px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 14px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            position: absolute;
+            bottom: 10px;
+        }
+
+        .copy-button:hover,
+        .raw-button:hover {
+            background-color: #b1632f;
+        }
+
+        .copy-button {
+            right: 80px;
+        }
+
+        .raw-button {
+            right: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="code-box">
+            <h2>Explorer</h2>
+            <code class="code" id="explorerCode">
+                loadstring(game:HttpGet("https://stellsor.xyz/scripts/explorer.lua", true))()
+            </code>
+            <button class="copy-button" onclick="copyToClipboard('explorerCode')">Copy</button>
+            <a href="https://stellsor.xyz/scripts/explorer.lua" target="_blank"><button class="raw-button">Raw</button></a>
+        </div>
+        <div class="code-box">
+            <h2>Hydroxide</h2>
+            <code class="code" id="hydroxideCode">
+                loadstring(game:HttpGet("https://stellsor.xyz/scripts/hydroxide.lua", true))()
+            </code>
+            <button class="copy-button" onclick="copyToClipboard('hydroxideCode')">Copy</button>
+            <a href="https://stellsor.xyz/scripts/hydroxide.lua" target="_blank"><button class="raw-button">Raw</button></a>
+        </div>
+        <div class="code-box">
+            <h2>Infinite Yield</h2>
+            <code class="code" id="infyieldCode">
+                loadstring(game:HttpGet("https://stellsor.xyz/scripts/infyield.lua", true))()
+            </code>
+            <button class="copy-button" onclick="copyToClipboard('infyieldCode')">Copy</button>
+            <a href="https://stellsor.xyz/scripts/infyield.lua" target="_blank"><button class="raw-button">Raw</button></a>
+        </div>
+        <div class="code-box">
+            <h2>Small Server Joiner</h2>
+            <code class="code" id="joinsmallserverCode">
+                loadstring(game:HttpGet("https://stellsor.xyz/scripts/joinsmallserver.lua", true))()
+            </code>
+            <button class="copy-button" onclick="copyToClipboard('joinsmallserverCode')">Copy</button>
+            <a href="https://stellsor.xyz/scripts/joinsmallserver.lua" target="_blank"><button class="raw-button">Raw</button></a>
+        </div>
+        <!-- Add more code-box divs as needed -->
+    </div>
+
+    <script>
+        function copyToClipboard(elementId) {
+            const el = document.createElement('textarea');
+            el.value = document.getElementById(elementId).innerText.trim();
+            document.body.appendChild(el);
+            el.select();
+            document.execCommand('copy');
+            document.body.removeChild(el);
+        }
+    </script>
+</body>
+
+</html>
