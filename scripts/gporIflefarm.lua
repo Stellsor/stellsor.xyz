@@ -64,7 +64,10 @@ local function ServerHop()
     end
 end
 
-
+-- Anti Idle
+for ,v in pairs(getconnections(game:GetService("Players").LocalPlayer.Idled)) do
+    v:Disable()
+end
 
 
 -- Rifle Farm Config.
