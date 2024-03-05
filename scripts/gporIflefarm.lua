@@ -6,6 +6,8 @@ getgenv().GPO = {
         ["Farm"] = true,
         ["ServerMode"] = "Public", -- Public,  Private.
         ["PrivateServerCode"] = nil, -- Leave This Nil Unless ServerMode Is Private.
+        ["AutoBuyGeppo"] = true, -- Cost 50k Peli
+        ["AutoWorldScroll"] = true,
     },
     RifleConfig = {
         ["AutoStats"] = true, -- Gun Mastery.
@@ -27,6 +29,12 @@ getgenv().GPO = {
         ["MuteVolume"] = true,
     }
 }
+
+if game.PlaceId == 10516808456 then return end
+if game.PlaceId == 1730877806 then wait(2) game:GetService("TeleportService"):Teleport(3978370137, game:GetService("Players").LocalPlayer) end
+
+wait(14)
+
 local island = getrenv()._G.currentisland
 local Test = false;
 
@@ -326,7 +334,7 @@ local function StartFarmNoRifle()
         repeat wait()
             game:GetService("ReplicatedStorage").Events.Shop:InvokeServer(game:GetService("Workspace").BuyableItems.Rifle)
             wait(0.2)
-        until PeliValue() < 300 and FindRifle()
+        until PeliValue() < 300
         repeat wait()
             game:GetService("ReplicatedStorage").Events.Tools:InvokeServer("equip", "Rifle")
         until game.Players.LocalPlayer.Backpack:FindFirstChild("Rifle") or game.Players.LocalPlayer.Character:FindFirstChild("Rifle")
@@ -437,9 +445,74 @@ task.spawn(function()
                 end
             end
 
+            -- Auto Buy Geppo.
+            if getgenv().GPO.Main["AutoBuyGeppo"] then
+                if PeliValue() >= 50000 and game:GetService("ReplicatedStorage"):FindFirstChild("Stats"..game.Players.LocalPlayer.Name).Skills.skyWalk.Value == false then
+                    repeat task.wait()
+                        game:GetService("ReplicatedStorage").Events.learnStyle:FireServer("skyWalkTrainer")
+                    until game:GetService("ReplicatedStorage"):FindFirstChild("Stats"..game.Players.LocalPlayer.Name).Skills.skyWalk.Value == true
+                end
+            end
 
-            if Level >= 575 then
-                game:Shutdown()
+            if getgenv().GPO.Main["AutoWorldScroll"] then
+                if Level >= 575 then
+                    local httpService = game:GetService("HttpService")
+                    local inventoryData = httpService:JSONDecode(game:GetService("ReplicatedStorage")["Stats"..game.Players.LocalPlayer.Name].Inventory.Inventory.Value)
+                    
+                    if inventoryData["World Scroll"] then
+                        print("You Already Have World Scroll")
+                    else
+                        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-12182.2041, 3.07369924, -18545.7578, 0.00755592529, 6.60752564e-09, -0.999971449, -1.50575126e-08, 1, 6.49393783e-09, 0.999971449, 1.50080144e-08, 0.00755592529)
+                        wait(1)
+                        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-12182.2041, 3.07369924, -18545.7578, 0.00755592529, 6.60752564e-09, -0.999971449, -1.50575126e-08, 1, 6.49393783e-09, 0.999971449, 1.50080144e-08, 0.00755592529)
+                        wait(0.2)
+                        if game:GetService("Workspace").Effects:FindFirstChild("World Scroll") then
+                            repeat wait()
+                                local httpService = game:GetService("HttpService") 
+                                local function tp() game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-12182.2041, 3.07369924, -18545.7578, 0.00755592529, 6.60752564e-09, -0.999971449, -1.50575126e-08, 1, 6.49393783e-09, 0.999971449, 1.50080144e-08, 0.00755592529) end
+                                local function prox() fireproximityprompt(game:GetService("Workspace").Effects:WaitForChild("World Scroll").ProximityPrompt, 500) end
+                                tp() prox() prox() wait(1) tp() prox() prox() wait(.3) tp() prox() prox() wait(.2) prox() tp() prox() prox() 
+                            until inventoryData["World Scroll"]
+                            game:GetService("TeleportService"):Teleport(10516808456, game:GetService("Players").LocalPlayer)
+                        else
+                            print("World Scroll Isnt Spawned")
+                            queueteleport = (syn and syn.queue_on_teleport) or queue_on_teleport or (fluxus and fluxus.queue_on_teleport)
+                            game.Players.LocalPlayer.OnTeleport:Connect(function(State)
+                                if queueteleport then
+                                    queueteleport([[
+                                        wait(14)
+                                        local httpService = game:GetService("HttpService")
+                                        local inventoryData = httpService:JSONDecode(game:GetService("ReplicatedStorage")["Stats"..game.Players.LocalPlayer.Name].Inventory.Inventory.Value)
+                                        
+                                        if inventoryData["World Scroll"] then
+                                            print("You Already Have World Scroll")
+                                        else
+                                            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-12182.2041, 3.07369924, -18545.7578, 0.00755592529, 6.60752564e-09, -0.999971449, -1.50575126e-08, 1, 6.49393783e-09, 0.999971449, 1.50080144e-08, 0.00755592529)
+                                            wait(1)
+                                            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-12182.2041, 3.07369924, -18545.7578, 0.00755592529, 6.60752564e-09, -0.999971449, -1.50575126e-08, 1, 6.49393783e-09, 0.999971449, 1.50080144e-08, 0.00755592529)
+                                            wait(0.2)
+                                            if game:GetService("Workspace").Effects:FindFirstChild("World Scroll") then
+                                                repeat wait()
+                                                    local httpService = game:GetService("HttpService") 
+                                                    local function tp() game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-12182.2041, 3.07369924, -18545.7578, 0.00755592529, 6.60752564e-09, -0.999971449, -1.50575126e-08, 1, 6.49393783e-09, 0.999971449, 1.50080144e-08, 0.00755592529) end
+                                                    local function prox() fireproximityprompt(game:GetService("Workspace").Effects:WaitForChild("World Scroll").ProximityPrompt, 500) end
+                                                    tp() prox() prox() wait(1) tp() prox() prox() wait(.3) tp() prox() prox() wait(.2) prox() tp() prox() prox() 
+                                                until inventoryData["World Scroll"]
+                                                game:GetService("TeleportService"):Teleport(10516808456, game:GetService("Players").LocalPlayer)
+                                            else
+                                                print("World Scroll Isnt Spawned")
+                                            end
+                                        end
+                                    ]])
+                                end
+                            end)
+                            local module = loadstring(game:HttpGet("https://pastebin.com/raw/zpxwY148",true))()
+                            module:Teleport(game.PlaceId)
+                            wait(10)
+                            loadstring(game:HttpGet("https://pastebin.com/raw/pRfv5PQH",true))()
+                        end
+                    end
+                end
             end
         end
     end
