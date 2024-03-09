@@ -6,6 +6,18 @@ for _,v in pairs(getconnections(game:GetService("LogService").MessageOut)) do
     v:Disable()
 end
 
+--anti idle
+for ,v in pairs(getconnections(game:GetService("Players").LocalPlayer.Idled)) do
+    v:Disable()
+end
+--thing
+task.spawn(function()
+    for i = 1,15 do
+        game:GetService("ReplicatedStorage").Events.Skill:InvokeServer("Firework Parade")
+        task.wait(20)
+    end
+end)
+
 -- Tween Function.
 function CreateTweenFloat()
     local Twan = game.Players.LocalPlayer.Character.HumanoidRootPart:FindFirstChild("ra") or Instance.new("BodyVelocity")
@@ -141,9 +153,3 @@ while wait() do
     end
 end
 
-task.spawn(function()
-    for i = 1,15 do
-        game:GetService("ReplicatedStorage").Events.Skill:InvokeServer("Firework Parade")
-        task.wait(20)
-    end
-end)
