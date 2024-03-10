@@ -124,7 +124,7 @@ game:GetService("RunService").RenderStepped:Connect(function()
         local Distance = (closestScientistNPC.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
         TweenTP(closestScientistNPC.HumanoidRootPart.CFrame, getgenv().Config["Speed"], CFrame.new())
     else
-        if workspace.Env.FactoryPool.HumanoidRootPart and workspace.Env.FactoryPool.barrelHP.Value > 0 then
+        if workspace.Env.FactoryPool.HumanoidRootPart and workspace.Env.FactoryPool.barrelHP.Value > 10 and workspace.Islands["Rose Kingdom"].Factory.FrontDoor.Top.BillboardGui.TextLabel.Text:find("CURRENT ALERT LEVEL:") then
             TweenTP(CFrame.new(8643.7998046875, 309.6028137207031, 11825.2607421875), getgenv().Config["Speed"], CFrame.new())
         end
     end
