@@ -1,3 +1,8 @@
+getgenv().Config = {
+    ["Speed"] = 50,
+    ["ChargeTimes"] = 25
+} 
+
 for _,v in pairs(getconnections(game:GetService("ScriptContext").Error)) do
     v:Disable()
 end
@@ -6,17 +11,9 @@ for _,v in pairs(getconnections(game:GetService("LogService").MessageOut)) do
     v:Disable()
 end
 
---anti idle
-for ,v in pairs(getconnections(game:GetService("Players").LocalPlayer.Idled)) do
-    v:Disable()
+for i,v in pairs(getconnections(game:GetService("Players").LocalPlayer.Idled)) do  
+    v:Disable()  
 end
---thing
-task.spawn(function()
-    for i = 1,15 do
-        game:GetService("ReplicatedStorage").Events.Skill:InvokeServer("Firework Parade")
-        task.wait(20)
-    end
-end)
 
 -- Tween Function.
 function CreateTweenFloat()
@@ -125,31 +122,38 @@ game:GetService("RunService").RenderStepped:Connect(function()
             end)
         end
         local Distance = (closestScientistNPC.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
-        TweenTP(closestScientistNPC.HumanoidRootPart.CFrame, 50, CFrame.new())
+        TweenTP(closestScientistNPC.HumanoidRootPart.CFrame, getgenv().Config["Speed"], CFrame.new())
     else
         if workspace.Env.FactoryPool.HumanoidRootPart and workspace.Env.FactoryPool.barrelHP.Value > 0 then
-            TweenTP(CFrame.new(8643.7998046875, 309.6028137207031, 11825.2607421875), 50, CFrame.new())
+            TweenTP(CFrame.new(8643.7998046875, 309.6028137207031, 11825.2607421875), getgenv().Config["Speed"], CFrame.new())
         end
     end
 end)
 
-
-while wait() do
-    for _, part in ipairs(game.Players.LocalPlayer.Character:GetChildren()) do
-        if part:IsA("NumberValue") then
-            if string.find(part.Name, "Buso") then
-                busoFound = true
-            else
+task.spawn(function()
+    while wait() do
+        for _, part in ipairs(game.Players.LocalPlayer.Character:GetChildren()) do
+            if part:IsA("NumberValue") then
+                if string.find(part.Name, "Buso") then
+                    busoFound = true
+                else
+                    busoFound = false
+                end
+            elseif not string.find(part.Name, "Buso") then
                 busoFound = false
             end
         end
-    end
-    if game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
-        for _,v in pairs(game.Players.LocalPlayer.Character:GetChildren()) do
-            if v:IsA('BasePart') and v.CanCollide then
-                v.CanCollide = false
+        if game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
+            for _,v in pairs(game.Players.LocalPlayer.Character:GetChildren()) do
+                if v:IsA('BasePart') and v.CanCollide then
+                    v.CanCollide = false
+                end
             end
         end
     end
-end
+end)
 
+for i = 1, getgenv().Config["ChargeTimes"] do
+    game:GetService("ReplicatedStorage").Events.Skill:InvokeServer("Firework Parade")
+    task.wait(20)
+end
