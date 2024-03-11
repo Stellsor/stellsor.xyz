@@ -24,6 +24,7 @@ getgenv().GPO = {
         ["TweenMain"] = 25,
     },
     Misc = {
+        ["AntiIdle"] = true,
         ["CapFps"] = false,
         ["FpsCap"] = 30,
         ["MuteVolume"] = true,
@@ -37,6 +38,16 @@ wait(14)
 
 local island = getrenv()._G.currentisland
 local Test = false;
+
+-- Anti Idle
+if getgenv().GPO.Misc["AntiIdle"] then
+        repeat wait() until game:IsLoaded() and game:GetService("Players")
+        for i,v in pairs(getconnections(game.Players.LocalPlayer.Idled)) do
+         v:Disable()
+    end
+    print("anti")
+end
+
 
 --** Server Hop Function **--
 local function ServerHop()
@@ -64,10 +75,7 @@ local function ServerHop()
     end
 end
 
--- Anti Idle
-for ,v in pairs(getconnections(game:GetService("Players").LocalPlayer.Idled)) do
-    v:Disable()
-end
+
 
 
 -- Rifle Farm Config.
