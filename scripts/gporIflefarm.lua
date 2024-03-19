@@ -1,6 +1,3 @@
---// -- // -- // -- // -- // -- // -- // -- // -- // -- // -- // -- // -- //
---                      AutoSettings & Functions                          --
---// -- // -- // -- // -- // -- // -- // -- // -- // -- // -- // -- // -- //
 getgenv().GPO = { 
     Main = {
         ["Farm"] = true,
@@ -24,7 +21,6 @@ getgenv().GPO = {
         ["TweenMain"] = 25,
     },
     Misc = {
-        ["AntiIdle"] = true,
         ["CapFps"] = false,
         ["FpsCap"] = 30,
         ["MuteVolume"] = true,
@@ -34,20 +30,21 @@ getgenv().GPO = {
 if game.PlaceId == 10516808456 then return end
 if game.PlaceId == 1730877806 then wait(2) game:GetService("TeleportService"):Teleport(3978370137, game:GetService("Players").LocalPlayer) end
 
-wait(14)
+wait(12)
 
-local island = getrenv()._G.currentisland
 local Test = false;
 
--- Anti Idle
-if getgenv().GPO.Misc["AntiIdle"] then
-        repeat wait() until game:IsLoaded() and game:GetService("Players")
-        for i,v in pairs(getconnections(game.Players.LocalPlayer.Idled)) do
-         v:Disable()
-    end
-    print("anti")
+for _,v in pairs(getconnections(game:GetService("ScriptContext").Error)) do
+    v:Disable()
+end
+ 
+for _,v in pairs(getconnections(game:GetService("LogService").MessageOut)) do
+    v:Disable()
 end
 
+for i,v in pairs(getconnections(game:GetService("Players").LocalPlayer.Idled)) do  
+    v:Disable()  
+end
 
 --** Server Hop Function **--
 local function ServerHop()
@@ -103,7 +100,6 @@ end)
 -- Variables.
 local Player = game:GetService("Players").LocalPlayer
 local Name = game:GetService("Players").LocalPlayer.Name
-local CurrentIsland = getrenv()._G.currentisland
 local VU = game:GetService('VirtualUser')
 if game.Players.LocalPlayer.Character:FindFirstChild("FallDamage") then 
 	game.Players.LocalPlayer.Character.FallDamage:Remove()
@@ -129,7 +125,6 @@ local function TweenTP(e, studspersecond, offset)
     
 
     local replicatedStorage = game:GetService("ReplicatedStorage")
-    local faceMouseEvent = replicatedStorage.Events:FindFirstChild("faceMouse")
 
     CreateTweenFloat()
 
@@ -150,10 +145,8 @@ local function TweenTP(e, studspersecond, offset)
     local twn = game.TweenService:Create(char.HumanoidRootPart, TweenInfo.new(Time,Enum.EasingStyle.Linear), {CFrame = (cframe or input.CFrame)});
 
     repeat wait() until not game.Players.LocalPlayer.Character:FindFirstChild("SafeForceField") wait()
-    faceMouseEvent:FireServer()
     twn:Play();
     twn.Completed:Wait();
-    faceMouseEvent:FireServer()
     if game.workspace:FindFirstChild("LocationMain") then
         game.workspace.LocationMain:Destroy()
     end
@@ -269,7 +262,7 @@ end
 
 -- At Fishman Check.
 local function AtFishman()
-    if getrenv()._G.currentisland == "Fishman Island" then 
+    if workspace.islandMusic.SoundId == "rbxassetid://1842953528" then
         return true
     else
         return false
